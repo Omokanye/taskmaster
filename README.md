@@ -8,7 +8,6 @@ Taskmaster is a web application designed to help users manage tasks efficiently.
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
-- [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -24,8 +23,8 @@ Taskmaster is a web application designed to help users manage tasks efficiently.
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/frontend-taskmaster.git
-   git clone https://github.com/yourusername/backend-taskmaster.git
+  
+   git clone https://github.com/Omokanye/taskmaster.git
 ## Usage
 Open the application in your browser.
 Create tasks by filling out the task input fields.
@@ -33,10 +32,10 @@ View, edit, and delete tasks as needed.
 
 ## API Endpoints
 Method	Endpoint	Description
-GET    	/tasks	    Get all tasks
-POST	  /tasks	       Add a new task
-PUT	    /tasks/:id	 Update an existing task
-DELETE	/tasks/:id	Delete a task
+#GET    	/tasks	    Get all tasks
+#POST	  /tasks	       Add a new task
+#PUT	    /tasks/:id	 Update an existing task
+#DELETE	/tasks/:id	Delete a task
 
 License
 This project is licensed under the MIT License.
