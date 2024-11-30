@@ -42,64 +42,68 @@
             
 
             <!-- Google Sign-In -->
-            <section class="google-signup">
-                <div id="g_id_onload"
-                    data-client_id="604645501645-tiprv91vib0fme8j6hjhjln1nc0alvhs.apps.googleusercontent.com"
-                    data-callback="handleCredentialResponse"
-                    data-redirect_uri="./pages/dashboard.html">
-                </div>
-                <div class="g_id_signin" data-type="standard"></div>
-            </section>
+<section class="google-signup">
+    <div id="g_id_onload"
+        data-client_id="604645501645-tiprv91vib0fme8j6hjhjln1nc0alvhs.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+</section>
 
-            <!-- Footer Section -->
-            <section class="footer">
-                <p>Already have an account? <a href="./login.html">Sign In</a></p>
-            </section>
-        </section>
-    </main>
+<!-- Footer Section -->
+<section class="footer">
+    <p>Already have an account? <a href="./login.html">Sign In</a></p>
+</section>
 
-    <script>
-        // Handle Form Submission
-        document.getElementById('signup-form').addEventListener('submit', async (event) => {
-            event.preventDefault();  // Prevent form from reloading the page
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-    
-            const submitButton = document.querySelector('.submit-btn');
-            submitButton.innerHTML = 'Creating Account...'; // Change button text
-            submitButton.disabled = true;  // Prevent multiple submissions
-    
-            try {
-                const response = await fetch('https://your-backend-url.com/api/auth/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password })  // Send data to backend
-                });
-    
-                const data = await response.json();
-    
-                if (response.ok) {
-                    alert('Registration successful!');
-                    window.location.href = "/pages/dashboard.html";  // Redirect on success
-                } else {
-                    alert(`Error: ${data.message || 'Something went wrong'}`);
-                }
-            } catch (error) {
-                console.error('Network error:', error);
-                alert('Network error. Please try again later.');
-            } finally {
-                submitButton.innerHTML = 'Create Account';  // Reset button text
-                submitButton.disabled = false;  // Re-enable button
+<script>
+    // Redirect URI for successful sign-in
+    const redirectUri = "https://taskmaster-ij89.vercel.app/pages/dashboard.html";
+
+    // Handle Google Sign-In
+    function handleCredentialResponse(response) {
+        console.log("Encoded JWT ID token:", response.credential);
+
+        // Redirect to the dashboard
+        window.location.href = redirectUri;
+    }
+
+    // Handle Form Submission for manual signup
+    document.getElementById('signup-form').addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent page reload
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const submitButton = document.querySelector('.submit-btn');
+        
+        submitButton.textContent = 'Creating Account...'; // Update button text
+        submitButton.disabled = true; // Disable button to prevent multiple submissions
+
+        try {
+            const response = await fetch('https://your-backend-url.com/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Registration successful!');
+                window.location.href = redirectUri; // Redirect on successful registration
+            } else {
+                alert(`Error: ${data.message || 'Something went wrong'}`);
             }
-        });
-    
-        // Handle Google Sign-In
-        function handleCredentialResponse(response) {
-            console.log("Encoded JWT ID token: " + response.credential);
-            window.location.href = "/pages/dashboard.html";  // Redirect after sign-in
+        } catch (error) {
+            console.error('Network error:', error);
+            alert('Network error. Please try again later.');
+        } finally {
+            submitButton.textContent = 'Create Account'; // Reset button text
+            submitButton.disabled = false; // Re-enable button
         }
+    });
+</script>
+
     </script>
     
 </body>
