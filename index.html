@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="TaskMaster - A task management system" />
+    <title>TaskMaster - Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <header>
+        <section class="logo-container">
+            <img src="./frontend/pages/images/rmlogo.png" alt="TaskMaster logo" class="logo" />
+            <h1>TaskMaster</h1>
+        </section>
+    </header>
+
+    <main class="hero-container">
+        <section class="hero-text">
+            <img src="./frontend/pages/images/rmlogo.png" alt="TaskMaster logo" class="logo" />
+            <h2>Welcome to TaskMaster</h2>
+            <p>Organize, prioritize, and track your tasks efficiently.</p>
+        </section>
+
+        <!-- Signup Form -->
+        <section class="signup-form">
+            <h2>Create a TaskMaster Account</h2>
+            <form id="signup-form">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required />
+
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+            
+
+            <!-- Google Sign-In -->
+            <section class="google-signup">
+                <div id="g_id_onload"
+                    data-client_id="604645501645-tiprv91vib0fme8j6hjhjln1nc0alvhs.apps.googleusercontent.com"
+                    data-callback="handleCredentialResponse"
+                    data-redirect_uri="./pages/dashboard.html">
+                </div>
+                <div class="g_id_signin" data-type="standard"></div>
+            </section>
+
+            <!-- Footer Section -->
+            <section class="footer">
+                <p>Already have an account? <a href="./login.html">Sign In</a></p>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        // Handle Form Submission
+        document.getElementById('signup-form').addEventListener('submit', async (event) => {
+            event.preventDefault();  // Prevent form from reloading the page
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+    
+            const submitButton = document.querySelector('.submit-btn');
+            submitButton.innerHTML = 'Creating Account...'; // Change button text
+            submitButton.disabled = true;  // Prevent multiple submissions
+    
+            try {
+                const response = await fetch('https://your-backend-url.com/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password })  // Send data to backend
+                });
+    
+                const data = await response.json();
+    
+                if (response.ok) {
+                    alert('Registration successful!');
+                    window.location.href = "/pages/dashboard.html";  // Redirect on success
+                } else {
+                    alert(`Error: ${data.message || 'Something went wrong'}`);
+                }
+            } catch (error) {
+                console.error('Network error:', error);
+                alert('Network error. Please try again later.');
+            } finally {
+                submitButton.innerHTML = 'Create Account';  // Reset button text
+                submitButton.disabled = false;  // Re-enable button
+            }
+        });
+    
+        // Handle Google Sign-In
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            window.location.href = "/pages/dashboard.html";  // Redirect after sign-in
+        }
+    </script>
+    
+</body>
+</html>

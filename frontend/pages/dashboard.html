@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <section id="welcome-back">
+            <h2>Welcome Back!</h2>
+            <p>Your productivity hub is ready.</p>
+        </section>
+    </header>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar Toggle Button -->
+        <button id="sidebar-toggle" class="sidebar-toggle">☰</button>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#priorities">Priorities</a></li>
+                    <li><a href="#predictive-scheduling">Predictive Scheduling</a></li>
+                    <li><a href="#task-overview">Task Overview</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main>
+            <!-- Task Search -->
+            <section id="task-search">
+                <h2>Search Tasks</h2>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search by Title or Description">
+                    <button type="button">Search</button>
+                </div>
+            </section>
+
+            <!-- Eisenhower Matrix -->
+            <section class="eisenhower-matrix" id="priorities">
+                <h2>Task Prioritization Matrix</h2>
+                <div class="matrix-grid">
+                    <div class="matrix-item urgent-important">
+                        <img src="images/urgent.png" alt="Urgent & Important" />
+                        <h3>Urgent & Important</h3>
+                        <ul class="task-list" id="urgent-important-list"></ul>
+                    </div>
+                    <div class="matrix-item schedule-lessurgent">
+                        <img src="images/schedule.png" alt="Schedule / Less Urgent" />
+                        <h3>Schedule / Less Urgent</h3>
+                        <ul class="task-list" id="schedule-lessurgent-list"></ul>
+                    </div>
+                    <div class="matrix-item lessimportant-delegate">
+                        <img src="images/less_important.png" alt="Less Important / Delegate" />
+                        <h3>Less Important / Delegate</h3>
+                        <ul class="task-list" id="lessimportant-delegate-list"></ul>
+                    </div>
+                    <div class="matrix-item dontdo-discover">
+                        <img src="images/dont.png" alt="Don't Do / Avoid" />
+                        <h3>Don't Do / Avoid</h3>
+                        <ul class="task-list" id="dontdo-discover-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add Task Form -->
+            <section class="add-task">
+                <h2>Add New Task</h2>
+                <form id="task-form">
+                    <input type="text" id="task-title" placeholder="Task Title" required>
+                    <textarea id="task-desc" placeholder="Task Description"></textarea>
+                    <select id="task-priority" required>
+                        <option value="">Select Priority</option>
+                        <option value="urgent-important">Urgent & Important</option>
+                        <option value="schedule-lessurgent">Schedule / Less Urgent</option>
+                        <option value="lessimportant-delegate">Less Important / Delegate</option>
+                        <option value="dontdo-discover">Don't Do / Avoid</option>
+                    </select>
+                    <input type="date" id="task-deadline" required>
+                    <button type="submit">Add Task</button>
+                </form>
+            </section>
+
+            <!-- Predictive Scheduling -->
+            <section id="predictive-scheduling">
+                <h2>Predictive Scheduling</h2>
+                <div>
+                    <label for="expected-start">Start Date:</label>
+                    <input type="date" id="expected-start">
+                </div>
+                <div>
+                    <label for="expected-finish">Finish Date:</label>
+                    <input type="date" id="expected-finish">
+                </div>
+                <button id="save-schedule">Save Your Schedule</button>
+            </section>
+
+            <!-- Task Overview -->
+            <section id="task-overview">
+                <h2>Task Overview</h2>
+                <ul>
+                    <li><strong>Tasks Completed:</strong> 5/10</li>
+                    <li><strong>On Track:</strong> 3/10</li>
+                    <li><strong>Behind Schedule:</strong> 2/10</li>
+                </ul>
+                <canvas id="task-graph"></canvas>
+            </section>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

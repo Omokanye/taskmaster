@@ -1,0 +1,532 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: auto;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: auto;  /* adds a scrollbar if content overflows */
+    overflow-y: scroll;  /* always show a vertical scrollbar */
+    overflow-x: scroll;  /* always show a horizontal scrollbar */
+
+}
+.scroll-container {
+    overflow: auto;
+    scrollbar-width: thin; /* Firefox - makes scrollbar thin */
+    scrollbar-color: transparent transparent; /* Hides the thumb and track color */
+}
+
+/* Chrome, Safari */
+.scroll-container::-webkit-scrollbar {
+    width: 0;  /* Makes scrollbar effectively invisible */
+}
+
+
+/* Header */
+header {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.header-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.header-content p {
+    font-size: 1rem;
+}
+
+/* Sidebar */
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+    display: none;  /* Hidden by default */
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1100;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px; /* Sidebar width */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    transform: translateX(-100%);  /* Hidden by default */
+    transition: transform 0.3s ease-in-out;
+}
+
+
+/* Sidebar Links */
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    position: fixed;
+}
+
+.sidebar nav ul li {
+    margin: 10px 10px;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+}
+.sidebar nav ul li a:hover {
+    background-color: #515457;
+    border-radius: 10%;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0px; /* Adjust for sidebar */
+    transition: padding-left 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    margin-left: 250px; /* or whatever the sidebar width is */
+}
+
+/* Main Content */
+main {
+    flex: 5;
+    padding: 2rem;
+    margin-left:-200px;
+    overflow-y: auto;
+}
+#task-search {
+    display: flex;
+    justify-content: center; /* Centers the search bar horizontally */
+    align-items: center; /* Aligns vertically if needed */
+    margin-bottom: 1rem;
+}
+
+.search-bar {
+    display: flex; /* Makes the input and button align side by side */
+    width: 60%; /* Controls the width of the entire search bar */
+}
+
+.search-bar input {
+    flex-grow: 1; /* Makes input take available space */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.search-bar input:focus {
+    border-color: #007bff;
+}
+
+.search-bar button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+/* Eisenhower Matrix */
+.eisenhower-matrix {
+    margin-bottom: 2rem;
+    background-color: #f4f7fb;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+/* Heading Style */
+.eisenhower-matrix h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #333;
+}
+
+/* Grid Layout for Matrix Items */
+.matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 1.5rem;
+}
+
+/* Individual Matrix Cards */
+.matrix-item {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.matrix-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the Matrix Images */
+.matrix-item img {
+    max-width: 80px; /* Set image size */
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+/* Task List Style */
+.task-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.task-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+/* Category-specific Backgrounds and Text Colors */
+.urgent-important {
+    background-color: #ff5733; /* Red */
+    color: white;
+}
+
+.schedule-lessurgent {
+    background-color: #ffeb3b; /* Yellow */
+    color: black;
+}
+
+.lessimportant-delegate {
+    background-color: #4caf50; /* Green */
+    color: white;
+}
+
+.dontdo-discover {
+    background-color: #9e9e9e; /* Grey */
+    color: white;
+}
+
+/* Category Headings */
+.matrix-item h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+
+
+/* Task Form */
+.add-task {
+    margin-top: 2rem;
+}
+
+.add-task h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.add-task form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-task input,
+.add-task textarea,
+.add-task select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-task button {
+    background-color: #007bff;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    align-items: center;
+    transition: background 0.3s ease;
+    width: 50%;
+}
+
+.add-task button:hover {
+    background-color: #0056b3;
+}
+
+/* Task Item Styling */
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #f1f1f1;
+    margin: 0.5rem 0;
+    border-radius: 4px;
+    position: relative;
+}
+
+.task-item .task-title {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.task-item .task-desc {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.task-item .task-deadline {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.task-item.urgent .task-title:before {
+    content: "⚠️ ";
+    font-size: 1.2rem;
+    color: red;
+    margin-right: 8px;
+}
+
+.warning-sign {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: yellow;
+}
+
+.task-checkbox {
+    margin-right: 10px;
+}
+
+.delete-task {
+    cursor: pointer;
+    color: red;
+    font-size: 1.2rem;
+    margin-left: 10px;
+}
+
+.task-item.completed {
+    text-decoration: line-through;
+    background-color: #d3d3d3;
+}
+
+.task-list {
+    padding: 0;
+    list-style: none;
+}
+
+.delete-task:hover {
+    color: darkred;
+}
+
+#predictive-scheduling {
+    margin: 2rem;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#predictive-scheduling h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+section h3 {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+section p {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+input[type="date"] {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+#action button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#action button:hover {
+    background-color: #0056b3;
+}
+#task-overview {
+    margin: 2rem;
+    padding: 2rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#task-overview h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+#task-progress {
+    margin-bottom: 2rem;
+}
+
+#task-progress h3 {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 1rem;
+}
+
+#task-progress ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#task-progress ul li {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+#task-graph {
+    width: 100%;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+}
+
+#task-tips {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#task-tips h3 {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+#task-tips ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#task-tips ul li {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Adjust Grid Layout */
+    .matrix-grid {
+        grid-template-columns: 1fr; /* Single column layout for smaller screens */
+    }
+
+    /* Resize Images */
+    .matrix-item img {
+        max-width: 60px; /* Smaller images on mobile */
+        width: 100%; /* Ensure they scale properly */
+    }
+
+    /* Adjust Heading Font Size */
+    .matrix-item h3 {
+        font-size: 1rem; /* Adjust font size */
+    }
+
+    /* Main Content */
+    main {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    /* Header Styling */
+    header {
+        padding: 1rem;
+        text-align: center;
+    }
+}
+
+/* Additional styles for larger screen sizes */
+@media (min-width: 769px) {
+    /* Make the sidebar visible on larger screens */
+    .sidebar {
+        display: block;
+        position: relative;
+        width: 250px; /* Adjust width as needed */
+        height: 100%;
+    }
+    
+    .sidebar-toggle {
+        display: none; /* Hide toggle on larger screens */
+    }
+}
